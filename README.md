@@ -19,7 +19,26 @@ scripts/install-judge-kotlin.sh     # installs to ~/.local/cf-kotlin
 
 The script downloads kotlinc 2.2.0 and the Eclipse Temurin JDK 11.0.28+6 into
 `~/.local/cf-kotlin` (about 400 MB). It does not change your own Java, Kotlin or
-`PATH`. To remove it: `rm -rf ~/.local/cf-kotlin`. To install elsewhere, pass a
+`PATH`.
+
+If you already have a Java 11 JDK (any vendor, for example Amazon Corretto),
+pass its home folder and only kotlinc is downloaded (about 80 MB):
+
+```bash
+JDK11_HOME=/path/to/corretto-11 scripts/install-judge-kotlin.sh
+```
+
+The home folder is the one containing `bin/java` and `bin/javac`. The script
+checks that it is Java 11 and refuses anything newer, because the judge runs
+Java 11. Your other JDKs are not affected, and `make validate` uses only this
+one. If you later move or upgrade that JDK, run the command again.
+
+To find the folder: on macOS, `/usr/libexec/java_home -v 11` prints it. On
+Linux, look in `/usr/lib/jvm/`. JDKs downloaded by IntelliJ IDEA are usually in
+`~/.jdks/` (on macOS, `~/Library/Java/JavaVirtualMachines/`, with the home
+folder inside at `Contents/Home`). Or search for it:
+`find ~ /usr/lib/jvm /Library/Java -name javac -path '*11*' 2>/dev/null`
+prints `<home>/bin/javac`. To remove it: `rm -rf ~/.local/cf-kotlin`. To install elsewhere, pass a
 folder (`scripts/install-judge-kotlin.sh /path`) and then use `CF_KOTLIN=/path`
 with `make`.
 
