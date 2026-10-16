@@ -61,14 +61,12 @@ object In {
 val out = StringBuilder()
 
 fun solve() {
-    val a = In.int()
-    val b = In.int()
+    val sliceOfCheese = In.int()
+    val sliceOfSausage = In.int()
 
-    val bySausage = b
+    val amountOfSandwich = sliceOfCheese - sliceOfSausage
 
-    val byCheese = a - bySausage
-
-    val answer = if (byCheese <= 0) -1 else minOf(bySausage, byCheese)
+    val answer = if (amountOfSandwich <= 0) -1 else minOf(sliceOfSausage, amountOfSandwich)
 
     out.append(answer).append('\n')
 }
