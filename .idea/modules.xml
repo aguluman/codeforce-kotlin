@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/templates/template.iml" filepath="$PROJECT_DIR$/templates/template.iml" />
       <module fileurl="file://$PROJECT_DIR$/contests/contest_1047/A-collatz-conjecture/cf-1047-A-collatz-conjecture.iml" filepath="$PROJECT_DIR$/contests/contest_1047/A-collatz-conjecture/cf-1047-A-collatz-conjecture.iml" />
       <module fileurl="file://$PROJECT_DIR$/contests/contest_1047/C-maximum-even-sum/cf-1047-C-maximum-even-sum.iml" filepath="$PROJECT_DIR$/contests/contest_1047/C-maximum-even-sum/cf-1047-C-maximum-even-sum.iml" />
+      <module fileurl="file://$PROJECT_DIR$/contests/contest_2276/A-perfect-sandwiches/cf-2276-A-perfect-sandwiches.iml" filepath="$PROJECT_DIR$/contests/contest_2276/A-perfect-sandwiches/cf-2276-A-perfect-sandwiches.iml" />
     </modules>
   </component>
 </project>
