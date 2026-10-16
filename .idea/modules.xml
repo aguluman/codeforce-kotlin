@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/codeforces-kotlin.iml" filepath="$PROJECT_DIR$/codeforces-kotlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/templates/template.iml" filepath="$PROJECT_DIR$/templates/template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/contests/contest_1047/A-collatz-conjecture/cf-1047-A-collatz-conjecture.iml" filepath="$PROJECT_DIR$/contests/contest_1047/A-collatz-conjecture/cf-1047-A-collatz-conjecture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/contests/contest_1047/C-maximum-even-sum/cf-1047-C-maximum-even-sum.iml" filepath="$PROJECT_DIR$/contests/contest_1047/C-maximum-even-sum/cf-1047-C-maximum-even-sum.iml" />
+    </modules>
+  </component>
+</project>

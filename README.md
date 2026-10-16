@@ -81,6 +81,22 @@ Validation will use it instead of `expected.txt`. See
 kotlinc takes several seconds per file, so compiled jars are kept in each
 problem's `_build/` folder and rebuilt only when `Main.kt` changes.
 
+### IntelliJ
+
+Open the folder in IntelliJ IDEA. The project uses Corretto 11 as its SDK and
+attaches `kotlin-stdlib.jar` from `~/.local/cf-kotlin`, so run the install script
+first.
+
+Every problem is its own IntelliJ module, like a directory with its own `dune`
+file: `contests/contest_1047/A-collatz-conjecture/cf-1047-A-collatz-conjecture.iml`.
+Each `Main.kt` declares the same top-level `In`, `out`, `solve` and `main`, and
+Kotlin folders don't separate names, so in one shared module they would clash.
+Separate modules keep them apart, and every problem gets full analysis.
+
+`make add-problem` creates the new module for you. After adding or deleting
+problem folders by hand, run `make ide`. The IntelliJ Run button uses your
+default JDK without the judge's options, so trust `make validate`, not a green run.
+
 ## The template
 
 `templates/Main.kt` has a fast byte-level reader (`In.int()`, `In.long()`,

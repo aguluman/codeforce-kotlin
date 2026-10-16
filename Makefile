@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 .DEFAULT_GOAL := help
-.PHONY: new-contest add-problem run-problem validate validate-all clean help
+.PHONY: new-contest add-problem ide run-problem validate validate-all clean help
 
 # Toolchain from scripts/install-judge-kotlin.sh: kotlinc 2.2.0 + Java 11.
 CF_KOTLIN ?= $(HOME)/.local/cf-kotlin
@@ -51,7 +51,8 @@ add-problem:
 	    -e "s/\[\[TITLE\]\]/$$title_escaped/g" templates/Main.kt > "$$problem_dir/Main.kt"; \
 	touch "$$problem_dir/input.txt" "$$problem_dir/expected.txt"; \
 	echo "✅ Added problem $$letter: $$title"; \
-	echo "   Source: $$problem_dir/Main.kt"
+	echo "   Source: $$problem_dir/Main.kt"; \
+	scripts/ide.sh
 
 # make run-problem CONTEST=XXXX PROBLEM=A [INPUT=path]
 # Prints the program's output instead of comparing it.
@@ -69,6 +70,10 @@ run-problem:
 	fi; \
 	"$(CF_KOTLIN)/jdk/bin/java" -Xss64M -jar "$$jar" < "$$input"
 
+# make ide: one IntelliJ module per problem (add-problem runs it for you)
+ide:
+	@scripts/ide.sh
+
 # make validate CONTEST=XXXX PROBLEM=A
 validate:
 	@$(find_problem); scripts/validate.sh "$$problem_path"
@@ -83,6 +88,7 @@ help:
 	@echo "Codeforces Kotlin workflow (submission is manual: upload Main.kt)"; \
 	echo "  make new-contest [CONTEST=XXXX]"; \
 	echo "  make add-problem CONTEST=XXXX [TITLE=...] [LETTER=C]"; \
+	echo "  make ide   (regenerate IntelliJ modules, one per problem)"; \
 	echo "  make run-problem CONTEST=XXXX PROBLEM=A [INPUT=file]"; \
 	echo "  make validate CONTEST=XXXX PROBLEM=A"; \
 	echo "  make validate-all | make clean"
