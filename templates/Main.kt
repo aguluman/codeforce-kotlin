@@ -1,14 +1,11 @@
 // Codeforces [[CONTEST]] — Problem [[LETTER]]: [[TITLE]]
 
-// Byte-level stdin reader. On 2 million ints it took 54 ms, against 228 ms
-// for BufferedReader + StringTokenizer and 931 ms for readLine() + split.
 object In {
     private val stream = System.`in`
     private val buf = ByteArray(1 shl 16)
     private var len = 0
     private var pos = 0
 
-    // Next byte, or -1 at end of input.
     private fun read(): Int {
         if (pos == len) {
             len = stream.read(buf, 0, buf.size)
@@ -41,7 +38,6 @@ object In {
 
     fun int(): Int = long().toInt()
 
-    // A whitespace-delimited token, e.g. a string or a grid row.
     fun word(): String {
         val sb = StringBuilder()
         var c = skipBlanks()
@@ -56,19 +52,16 @@ object In {
     fun longs(n: Int) = LongArray(n) { long() }
 }
 
-// Build all output here and print it once: println per line was about
-// 5 times slower for 200,000 lines.
 val out = StringBuilder()
 
 fun solve() {
     val n = In.int()
     val a = In.ints(n)
-    // Int is 32-bit: sum into a Long whenever the total can pass 2.1e9.
+
     out.append(a.sumOf { it.toLong() }).append('\n')
 }
 
 fun main() {
-    // Single test case? Replace the loop with: solve()
     repeat(In.int()) { solve() }
     print(out)
 }
