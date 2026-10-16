@@ -63,7 +63,7 @@ fun solve() {
     val b = In.long()
     val answer = when {
         b % 2 == 1L -> if (a % 2 == 0L) -1 else a * b + 1  // b odd
-        a % 2 == 1L && b % 4 != 0L -> -1                    // a odd, b = 2 mod 4
+        a % 2 == 1L && b % 4 != 0L -> -1                    // an odd, b = 2 mod 4
         else -> a * (b / 2) + 2                             // k = b / 2
     }
     out.append(answer).append('\n')
