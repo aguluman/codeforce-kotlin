@@ -38,18 +38,7 @@ object In {
 
     fun int(): Int = long().toInt()
 
-    fun word(): String {
-        val sb = StringBuilder()
-        var c = skipBlanks()
-        while (c > ' '.code) {
-            sb.append(c.toChar())
-            c = read()
-        }
-        return sb.toString()
-    }
-
     fun ints(n: Int) = IntArray(n) { int() }
-    fun longs(n: Int) = LongArray(n) { long() }
 }
 
 val out = StringBuilder()
