@@ -1,10 +1,13 @@
 SHELL := /bin/bash
 .DEFAULT_GOAL := help
-.PHONY: new-contest add-problem ide run-problem validate validate-all clean help
+.PHONY: new-contest add-problem ide run-problem validate validate-all bytecode clean help
 
 # Toolchain from scripts/install-judge-kotlin.sh: kotlinc 2.2.0 + Java 11.
 CF_KOTLIN ?= $(HOME)/.local/cf-kotlin
 export CF_KOTLIN
+# Memory limit in MB for running solutions, as on the problem page; validate.sh reads it too.
+MEMORY_MB ?= 256
+export MEMORY_MB
 
 # Every problem directory: contests/contest_N/X-title
 ALL_PROBLEMS = $$(find contests -mindepth 2 -maxdepth 2 -type d | sort)
@@ -54,8 +57,10 @@ add-problem:
 	echo "   Source: $$problem_dir/Main.kt"; \
 	scripts/ide.sh
 
-# make run-problem CONTEST=XXXX PROBLEM=A [INPUT=path]
-# Prints the program's output instead of comparing it.
+# make run-problem CONTEST=XXXX PROBLEM=A [INPUT=path] [MEMORY_MB=256]
+# Prints the program's output instead of comparing it. Runs with the judge's JVM options,
+# the same as scripts/validate.sh: keep the two in step if Codeforces changes them.
+# The old jar is deleted before compiling, so a failed compile can never run old code.
 run-problem:
 	@$(find_problem); \
 	input="$(INPUT)"; if [ -z "$$input" ] || [ "$$input" = input ]; then input=input.txt; fi; \
@@ -64,11 +69,13 @@ run-problem:
 	jar="$$problem_path/_build/main.jar"; \
 	if [ ! "$$jar" -nt "$$problem_path/Main.kt" ]; then \
 		mkdir -p "$$problem_path/_build"; \
+		rm -f "$$jar"; \
 		JAVA_HOME="$(CF_KOTLIN)/jdk" "$(CF_KOTLIN)/kotlinc/bin/kotlinc" "$$problem_path/Main.kt" \
 			-include-runtime -d "$$jar" 2>&1 | grep -v '^warning:'; \
 		[ -f "$$jar" ] || exit 1; \
 	fi; \
-	"$(CF_KOTLIN)/jdk/bin/java" -Xss64M -jar "$$jar" < "$$input"
+	"$(CF_KOTLIN)/jdk/bin/java" -XX:NewRatio=5 -Xms8M -Xmx$(MEMORY_MB)M -Xss64M -DONLINE_JUDGE=true \
+		-Duser.language=en -Duser.region=US -Duser.variant=US -jar "$$jar" < "$$input"
 
 # make ide: one IntelliJ module per problem (add-problem runs it for you)
 ide:
@@ -81,6 +88,11 @@ validate:
 validate-all:
 	@scripts/validate.sh $(ALL_PROBLEMS)
 
+# make bytecode CONTEST=XXXX PROBLEM=A [CLASS=In] [FULL=1]
+# What the judge's compiler makes of Main.kt, as javap prints it. Pipe to less for long output.
+bytecode:
+	@$(find_problem); scripts/bytecode.sh "$$problem_path" "$(or $(CLASS),MainKt)" "$(if $(FULL),full,)"
+
 clean:
 	@find contests -type d -name _build -prune -exec rm -rf {} +; echo "✅ Clean complete"
 
@@ -91,4 +103,5 @@ help:
 	echo "  make ide   (regenerate IntelliJ modules, one per problem)"; \
 	echo "  make run-problem CONTEST=XXXX PROBLEM=A [INPUT=file]"; \
 	echo "  make validate CONTEST=XXXX PROBLEM=A"; \
+	echo "  make bytecode CONTEST=XXXX PROBLEM=A [CLASS=In] [FULL=1]   (javap of the judge compiler's output)"; \
 	echo "  make validate-all | make clean"
