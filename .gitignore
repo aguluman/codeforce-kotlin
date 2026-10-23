@@ -1,3 +1,4 @@
 # Compiled jars (rebuilt by make validate / run-problem)
 _build/
 **/_build/
+.idea/dictionaries/
