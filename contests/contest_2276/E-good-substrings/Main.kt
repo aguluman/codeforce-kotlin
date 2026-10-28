@@ -78,7 +78,7 @@ fun goodSubstringCounts(s: String): LongArray {
     fun addOver(from: Int, to: Int, constant: Long, perIndex: Long) {
         if (from > to) return
         flat[from] += constant; flat[to + 1] -= constant
-        slope[from] += perIndex; slope[to + 1] -= constant
+        slope[from] += perIndex; slope[to + 1] -= perIndex
     }
 
     for (l in 0 until n) {
@@ -98,8 +98,8 @@ fun goodSubstringCounts(s: String): LongArray {
     for (i in 0 until n) {
         runningFlat += flat[i]
         runningSlope += slope[i]
-        val containing = (i + 1).toLong() * (n - 1)
-        good[i] = containing - (runningFlat + runningSlope * 1)
+        val containing = (i + 1).toLong() * (n - i)
+        good[i] = containing - (runningFlat + runningSlope * i)
     }
 
     return good
