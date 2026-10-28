@@ -10,6 +10,8 @@
       <module fileurl="file://$PROJECT_DIR$/contests/contest_2276/B-replace-and-compress/cf-2276-B-replace-and-compress.iml" filepath="$PROJECT_DIR$/contests/contest_2276/B-replace-and-compress/cf-2276-B-replace-and-compress.iml" />
       <module fileurl="file://$PROJECT_DIR$/contests/contest_2276/C-subarrays/cf-2276-C-subarrays.iml" filepath="$PROJECT_DIR$/contests/contest_2276/C-subarrays/cf-2276-C-subarrays.iml" />
       <module fileurl="file://$PROJECT_DIR$/contests/contest_2276/D-caveman/cf-2276-D-caveman.iml" filepath="$PROJECT_DIR$/contests/contest_2276/D-caveman/cf-2276-D-caveman.iml" />
+      <module fileurl="file://$PROJECT_DIR$/contests/contest_2276/E-good-substrings/cf-2276-E-good-substrings.iml" filepath="$PROJECT_DIR$/contests/contest_2276/E-good-substrings/cf-2276-E-good-substrings.iml" />
+      <module fileurl="file://$PROJECT_DIR$/contests/contest_2276/F-permutation-coloring-game/cf-2276-F-permutation-coloring-game.iml" filepath="$PROJECT_DIR$/contests/contest_2276/F-permutation-coloring-game/cf-2276-F-permutation-coloring-game.iml" />
     </modules>
   </component>
 </project>
