@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/contests/contest_2276/D-caveman/cf-2276-D-caveman.iml" filepath="$PROJECT_DIR$/contests/contest_2276/D-caveman/cf-2276-D-caveman.iml" />
       <module fileurl="file://$PROJECT_DIR$/contests/contest_2276/E-good-substrings/cf-2276-E-good-substrings.iml" filepath="$PROJECT_DIR$/contests/contest_2276/E-good-substrings/cf-2276-E-good-substrings.iml" />
       <module fileurl="file://$PROJECT_DIR$/contests/contest_2276/F-permutation-coloring-game/cf-2276-F-permutation-coloring-game.iml" filepath="$PROJECT_DIR$/contests/contest_2276/F-permutation-coloring-game/cf-2276-F-permutation-coloring-game.iml" />
+      <module fileurl="file://$PROJECT_DIR$/contests/contest_2276/G-elimination-of-players/cf-2276-G-elimination-of-players.iml" filepath="$PROJECT_DIR$/contests/contest_2276/G-elimination-of-players/cf-2276-G-elimination-of-players.iml" />
     </modules>
   </component>
 </project>
