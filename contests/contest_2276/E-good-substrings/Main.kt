@@ -1,5 +1,3 @@
-import javax.swing.text.Position
-
 // Codeforces 2276 — Problem E: Good Substrings
 
 object In {
@@ -106,6 +104,7 @@ fun goodSubstringCounts(s: String): LongArray {
 }
 
 fun solve() {
+    In.int()
     val s = In.word()
     for (count in goodSubstringCounts(s))
         out.append(count).append(' ')
