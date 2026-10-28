@@ -54,7 +54,10 @@ val out = StringBuilder()
 /** next[i]: the first position at or after i that holds [c], or s.length when there is none. */
 fun nextPositions(s: String, c: Char): IntArray {
     val next = IntArray(s.length + 1) { s.length }
-    for (i in s.length - 1 downTo 0) next[i] = if (s[i] == c) i else next[i + 1]
+
+    for (i in s.length - 1 downTo 0) next[i] =
+        if (s[i] == c) i else next[i + 1]
+
     return next
 }
 
@@ -79,11 +82,14 @@ fun goodSubstringCounts(s: String): LongArray {
     val next0 = nextPositions(s, '0')
     val next5 = nextPositions(s, '5')
     val next6 = nextPositions(s, '6')
-    fun firstAfter(next: IntArray, position: Int): Int = if (position == none) none else next[position + 1]
+
+    fun firstAfter(next: IntArray, position: Int): Int =
+        if (position == none) none else next[position + 1]
 
     // Bad substrings containing i = flat(i) + slope(i) * i, built from range updates.
     val flat = LongArray(n + 1)
     val slope = LongArray(n + 1)
+
     fun addOver(from: Int, to: Int, constant: Long, perIndex: Long) {
         if (from > to) return
         flat[from] += constant; flat[to + 1] -= constant
@@ -103,6 +109,7 @@ fun goodSubstringCounts(s: String): LongArray {
     val good = LongArray(n)
     var runningFlat = 0L
     var runningSlope = 0L
+
     for (i in 0 until n) {
         runningFlat += flat[i]
         runningSlope += slope[i]
@@ -115,7 +122,9 @@ fun goodSubstringCounts(s: String): LongArray {
 fun solve() {
     In.int()             // n: the string carries its own length
     val s = In.word()
-    for (count in goodSubstringCounts(s)) out.append(count).append(' ')
+    for (count in goodSubstringCounts(s))
+        out.append(count).append(' ')
+
     out.append('\n')
 }
 
