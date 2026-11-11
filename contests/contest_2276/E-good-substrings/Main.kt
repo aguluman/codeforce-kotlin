@@ -51,7 +51,7 @@ object In {
 
 val out = StringBuilder()
 
-/** next[i]: the first position at or after i that holds [c], or s.length when there is none. */
+/** next[[i]]: the first position at or after i that holds [c], or s.length when there is none. */
 fun nextPositions(s: String, c: Char): IntArray {
     val next = IntArray(s.length + 1) { s.length }
 

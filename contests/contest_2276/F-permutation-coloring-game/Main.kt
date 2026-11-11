@@ -46,7 +46,7 @@ val out = StringBuilder()
 /** The two possible outcomes; their names are printed as they are. */
 enum class Winner { Alice, Bob }
 
-/** counts[s] = how many cycles of length s the permutation [p] has. */
+/** counts[[s]] = how many cycles of length s the permutation [p] has. */
 fun cycleLengthCounts(p: IntArray): IntArray {
     val n = p.size
     val counts = IntArray(n + 1)

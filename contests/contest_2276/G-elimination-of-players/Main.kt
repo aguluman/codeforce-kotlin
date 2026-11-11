@@ -61,15 +61,15 @@ val fact = LongArray(MAX_N + 1).also { f ->
  * Why this is correct:
  *
  * 1. Line the players up weakest first. Keep c, the weakest survivor. In round i, the player at
- *    position i + 1 arrives: if c is protected (c == a[i]) the arrival is eliminated, otherwise c is
- *    and the arrival becomes c. So for j != a[i]:
+ *    position i + 1 arrives: if c is protected (c == a[[i]]) the arrival is eliminated, otherwise c is
+ *    and the arrival becomes c. So for j != a[[i]]:
  *      ans(j, i) = weakest(j) + guarded(j),
  *    weakest(j) = permutations where c == j in round i,
- *    guarded(j) = permutations where j arrives in round i while c == a[i].
+ *    guarded(j) = permutations where j arrives in round i while c == a[[i]].
  * 2. Any fixed player sits at any fixed position in (n - 1)! permutations. So c becomes j after round i
- *    in (n - 1)! - guarded(j) permutations (j arrived, and c was not protected). And a[i] itself
- *    stays c if it already was, or arrives and takes over: weakest(a[i]) grows by (n - 1)!.
- * 3. c == x == a[i] in round i exactly when x arrived during the current run of equal a values and
+ *    in (n - 1)! - guarded(j) permutations (j arrived, and c was not protected). And a[[i]] itself
+ *    stays c if it already was, or arrives and takes over: weakest(a[[i]]) grows by (n - 1)!.
+ * 3. c == x == a[[i]] in round i exactly when x arrived during the current run of equal a values and
  *    the round before its arrival was unprotected. Inside the run that is automatic. At the run's
  *    first position it fails exactly when the previous run's player was protecting the end of the
  *    previous run, which is the same question one run back. Inclusion-exclusion along the runs gives
