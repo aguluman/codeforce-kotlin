@@ -49,7 +49,7 @@ val out = StringBuilder()
 const val MOD = 998_244_353L
 const val MAX_N = 5000
 
-/** fact[i] = i! mod MOD. */
+/** fact[[i]] = i! mod MOD. */
 val fact = LongArray(MAX_N + 1).also { f ->
     f[0] = 1
     for (i in 1..MAX_N) f[i] = f[i - 1] * i % MOD
