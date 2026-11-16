@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AgentCommitMessageProject"><![CDATA[{
+  "mode": "CUSTOM",
+  "instruction": "Avoid overly verbose descriptions or unnecessary details.\nUse[<action>] either add, update, delete, feature, fix, test, check, empty-commit-for-pipeline-trigger, etc before you state the content/diff of the commit selected to be pushed to the remote"
+}]]></component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
   </component>
