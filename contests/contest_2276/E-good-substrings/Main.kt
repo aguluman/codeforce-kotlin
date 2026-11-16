@@ -51,42 +51,36 @@ object In {
 
 val out = StringBuilder()
 
-/** next[[i]]: the first position at or after i that holds [c], or s.length when there is none. */
-fun nextPositions(s: String, c: Char): IntArray {
-    val next = IntArray(s.length + 1) { s.length }
+/** A position in the string, or NONE; asking NONE for its index fails loudly. */
+@JvmInline
+value class Position private constructor(private val raw: Int) {
+    val exists: Boolean get() = raw >= 0
+    val index: Int get() = raw.also { check(it >= 0) { "NONE has no index" } }
+    fun indexOr(fallback: Int): Int = if (exists) raw else fallback
 
-    for (i in s.length - 1 downTo 0) next[i] =
-        if (s[i] == c) i else next[i + 1]
-
-    return next
+    companion object {
+        val NONE = Position(-1)
+        fun at(index: Int): Position = if (index >= 0) Position(index) else NONE
+    }
 }
 
-/**
- * For each index i of [s], how many good substrings contain it.
- *
- * Why this is correct:
- * - 2025 and 2026 both start with 202. From a start l, match 2, 0, 2 each at its earliest
- *   position, ending at `end`. Any 2025 or 2026 inside s[(l..r)] can be moved onto this earliest
- *   202, so s[(l..r)] contains 2025 exactly when a 5 sits in (end, r], and 2026 when 6 does.
- * - With first5 and first6 the first 5 and first 6 after `end`, s[(l..r)] is bad exactly when
- *   first5 <= r < first6. So for each start l, the bad ends form one range [first5, first6 - 1].
- * - Index i lies in (i + 1) * (n - i) substrings; the answer subtracts the bad ones among them.
- *   The bad range [a, b] of start l holds b - a + 1 substrings containing i when l <= i <= a,
- *   b - i + 1 when a < i <= b, and none after b. A constant, then a line in i: two difference
- *   arrays add each range in O(1), and one sweep reads every answer. O(n) in total.
- */
+/** Where one digit appears: the first position holding it at or after any index. */
+class Occurrences(s: String, digit: Char) {
+    private val next = IntArray(s.length + 1) { -1 }.also { next ->
+        for (i in s.length - 1 downTo 0) next[i] = if (s[i] == digit) i else next[i + 1]
+    }
+
+    fun atOrAfter(i: Int): Position = Position.at(next[i])
+    fun after(position: Position): Position = if (position.exists) atOrAfter(position.index + 1) else Position.NONE
+}
+
+/** For each index of [s], how many good substrings contain it: all substrings minus the bad ones. */
 fun goodSubstringCounts(s: String): LongArray {
     val n = s.length
-    val none = n   // nextPositions' "no such position"
-    val next2 = nextPositions(s, '2')
-    val next0 = nextPositions(s, '0')
-    val next5 = nextPositions(s, '5')
-    val next6 = nextPositions(s, '6')
-
-    fun firstAfter(next: IntArray, position: Int): Int =
-        if (position == none) none else next[position + 1]
-
-    // Bad substrings containing i = flat(i) + slope(i) * i, built from range updates.
+    val twos = Occurrences(s, '2')
+    val zeros = Occurrences(s, '0')
+    val fives = Occurrences(s, '5')
+    val sixes = Occurrences(s, '6')
     val flat = LongArray(n + 1)
     val slope = LongArray(n + 1)
 
@@ -97,13 +91,13 @@ fun goodSubstringCounts(s: String): LongArray {
     }
 
     for (l in 0 until n) {
-        val end = firstAfter(next2, firstAfter(next0, next2[l]))   // the earliest 202 from l
-        if (end == none) continue                                   // no 202, so no 2025: all good
-        val first5 = next5[end + 1]
-        val lastBad = next6[end + 1] - 1                            // ends before the first 6
-        if (first5 > lastBad) continue                              // no 5 before the 6: all good
-        addOver(l, first5, (lastBad - first5 + 1).toLong(), 0)
-        addOver(first5 + 1, lastBad, (lastBad + 1).toLong(), -1)
+        val end = twos.after(zeros.after(twos.atOrAfter(l)))
+        val first5 = fives.after(end)
+        if (!first5.exists) continue
+        val lastBad = sixes.after(end).indexOr(n) - 1
+        if (first5.index > lastBad) continue
+        addOver(l, first5.index, (lastBad - first5.index + 1).toLong(), 0)
+        addOver(first5.index + 1, lastBad, (lastBad + 1).toLong(), -1)
     }
 
     val good = LongArray(n)
