@@ -66,32 +66,11 @@ fun solve() {
     val a = In.ints(n)
     a.sort()
 
-    var barrier = 1
-    for (i in 1 until n) {
-        if (a[i] == a[i - 1]) {
-            barrier = a[i]
-        }
-    }
+    var answer = 1L
 
-    var start = n
-    while (start > 0 && a[start - 1] > barrier) {
-        start--
-    }
-
-    val count = n - start
-    var answer = modPow(barrier, count)
-    var previous = barrier
-
-    for (i in start until n) {
-        val value = a[i]
-        val exponent = n - i
-
-        val between = (modPow(value - 1, exponent) -
-                modPow(previous, exponent) + MOD) % MOD
-        val atValue = modPow(value, exponent - 1)
-
-        answer = (answer + between + atValue) % MOD
-        previous = value
+    for (i in n - 1 downTo 0) {
+        if (i > 0 && a[i] == a[i - 1]) break
+        answer = (answer + modPow(a[i] - 1, n - i)) % MOD
     }
 
     out.append(answer).append('\n')
