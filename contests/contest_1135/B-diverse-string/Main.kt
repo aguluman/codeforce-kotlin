@@ -59,6 +59,7 @@ fun solve() {
     val ones = s.count { it == '1' }
     val zeros = n - ones
     val toggles = minOf(k, minOf(ones, zeros))
+
     val finalOnes: Int
     val finalZeros: Int
 
